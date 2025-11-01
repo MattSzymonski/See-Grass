@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <title>See Grass Settings</title>
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background: #252525;
@@ -22,6 +25,7 @@
         }
 
         h1 {
+            font-family: 'Inter', sans-serif;
             font-size: 26px;
             color: rgb(81, 172, 81);
             margin-bottom: 24px;
@@ -68,6 +72,7 @@
         }
 
         button {
+            font-family: 'Inter', sans-serif;
             margin-top: 25px;
             padding: 10px 16px;
             font-size: 16px;
@@ -78,10 +83,12 @@
             cursor: pointer;
             transition: background 0.2s ease;
         }
+
         button:hover {
             background: rgb(49, 136, 59);
         }
-        button:active{ 
+
+        button:active {
             background: #297232;
         }
 
@@ -89,7 +96,7 @@
             background: rgb(48, 48, 48);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 325px;
             max-width: 90vw;
             display: flex;
@@ -97,6 +104,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>See Grass Settings</h1>
 
@@ -104,19 +112,21 @@
         <!-- Reminder Interval -->
         <div class="option">
             <label for="reminderInterval">Reminder interval (minutes)</label>
-            <input id="reminderInterval" type="number" min="1" value="20" aria-label="Reminder interval in minutes" class="input-field-text"/>
+            <input id="reminderInterval" type="number" min="1" value="20" aria-label="Reminder interval in minutes"
+                class="input-field-text" />
         </div>
 
         <!-- Reminder Length -->
         <div class="option">
             <label for="reminderLength">Reminder length (seconds)</label>
-            <input id="reminderLength" type="number" min="1" value="10000" aria-label="Reminder length in seconds" class="input-field-text"/>
+            <input id="reminderLength" type="number" min="1" value="10000" aria-label="Reminder length in seconds"
+                class="input-field-text" />
         </div>
 
         <!-- Disable when screen-sharing -->
         <div class="option">
             <label for="disableWhenScreenSharing">
-            Disable when screen-sharing
+                Disable when screen-sharing
             </label>
             <input type="checkbox" id="disableWhenScreenSharing" />
         </div>
@@ -124,7 +134,7 @@
         <!-- Show system notification -->
         <div class="option">
             <label for="showSystemNotification">
-            Show system notification
+                Show system notification
             </label>
             <input type="checkbox" id="showSystemNotification" />
         </div>
@@ -159,7 +169,7 @@
         <!-- Show Arrow -->
         <div class="option">
             <label for="showArrow">
-            Show arrow
+                Show arrow
             </label>
             <input type="checkbox" id="showArrow" />
         </div>
@@ -180,4 +190,5 @@
 
     <script src="options.js"></script>
 </body>
+
 </html>

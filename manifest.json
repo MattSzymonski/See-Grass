@@ -3,25 +3,44 @@
     "name": "See Grass",
     "version": "1.0.0",
     "description": "Reminds you to rest your eyes and maybe go see some grass after too much screen time",
-    "permissions": ["storage", "alarms", "notifications", "tabs", "scripting"],
-    "host_permissions": ["<all_urls>"],
-    "background": { "service_worker": "background.js", "type": "module" },
+    "permissions": [
+        "storage",
+        "alarms",
+        "notifications",
+        "tabs",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
     "options_page": "options.html",
     "icons": {
         "128": "icons/icon128-grass.png"
     },
     "action": {
         "default_title": "See Grass",
-        "default_icon": 
-        {
+        "default_icon": {
             "128": "icons/icon128-grass.png"
         },
         "default_popup": "popup.html"
     },
     "web_accessible_resources": [
         {
-            "resources": ["overlay.js", "sounds/sound_1.mp3", "sounds/sound_2.mp3"],
-            "matches": ["<all_urls>"]
+            "resources": [
+                "overlay.js",
+                "sounds/sound_1.mp3",
+                "sounds/sound_2.mp3",
+                "images/grass_1.jpg",
+                "reminder.html",
+                "reminder.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
         }
-  ]
+    ]
 }

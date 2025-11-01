@@ -2,7 +2,6 @@ const DEFAULT_INTERVAL_MIN = 20;
 const DEBUG_INTERVAL_SEC = 10;
 
 
-
 // --- Helper: Set reminder timer ---
 async function setReminderTimer(intervalMs) {
   const nextReminderTime = Date.now() + (DEBUG_INTERVAL_SEC ? DEBUG_INTERVAL_SEC * 1000 : intervalMs);
@@ -76,24 +75,32 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 
-  // --- Otherwise show reminder overlay ---
-  
-  
-  const tab = await chrome.tabs.get(lastActiveTab.id);
-  const url = tab.url || "";
-  const canInjectOverlay = !url.startsWith("chrome://") && !url.startsWith("chrome://extensions/") && !url.startsWith("chrome-extension://") && !url.startsWith("devtools://");
-  if (canInjectOverlay) {
-    await chrome.windows.update(lastActiveTab.windowId, { focused: true });
-    await chrome.tabs.update(lastActiveTab.id, { active: true });
-    await chrome.scripting.executeScript({
-      target: { tabId: lastActiveTab.id },
-      files: ["overlay.js"],
-    });
-    console.log("[See Grass] Injected overlay.");
+  // --- Store the current active tab before opening reminder ---
+  const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (currentTab) {
+    await chrome.storage.local.set({ tabBeforeReminder: currentTab.id });
   }
 
+  // --- Open reminder in new tab ---
+  const reminderUrl = chrome.runtime.getURL("reminder.html");
+  const newTab = await chrome.tabs.create({ url: reminderUrl, active: true });
+
+  // Store reminder tab ID so we can switch back after it closes
+  await chrome.storage.local.set({ reminderTabId: newTab.id });
+
+  // Unminimize and bring window to front
+  if (lastActiveTab && lastActiveTab.windowId) {
+    const window = await chrome.windows.get(lastActiveTab.windowId);
+    if (window.state === "minimized") {
+      await chrome.windows.update(lastActiveTab.windowId, { state: "normal" });
+    }
+    // drawAttention brings the window to the top and makes it flash in the taskbar
+    await chrome.windows.update(lastActiveTab.windowId, { focused: true, drawAttention: true });
+  }
+
+  console.log("[See Grass] Opened reminder tab and brought browser to front.");
+
   // Customize message 
-  // Fix bluring
   // Count resignations?
   // Focus on browser (or open new tab)
   // Export and import settings (json)
@@ -121,40 +128,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     });
   }
 
-  // --- Play custom sound ---
-  
-  if (playSound === true && sound !== "system") {
-    chrome.tabs.query({}, (tabs) => {
-      // Find the first tab we can safely inject into
-      const validTab = tabs.find(tab => {
-        const url = tab.url || "";
-        const isValid =
-          url.startsWith("http://") ||
-          url.startsWith("https://") ||
-          url.startsWith("file://") ||
-          url.startsWith("about:blank"); // optional fallback
-        console.log("[See Grass] Checked tab:", url, "→", isValid ? "✅ valid" : "❌ invalid");
-        return isValid;
-      });
-
-      if (!validTab || !validTab.id) {
-        console.warn("[See Grass] No suitable tab found to play sound.");
-        return;
-      }
-
-      console.log("[See Grass] Playing custom sound in tab:", validTab.url);
-      chrome.scripting.executeScript({
-        target: { tabId: validTab.id },
-        func: (sound) => {
-          const audio = new Audio(chrome.runtime.getURL(`sounds/${sound}.mp3`));
-          audio.volume = 0.8;
-          audio.play().catch(err => console.warn("Audio play failed:", err));
-        },
-        args: [sound],
-      });
-    });
-  }
-
   // --- Schedule next reminder ---
   await setReminderTimer(intervalMs);
 });
@@ -165,6 +138,28 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
   await chrome.storage.local.set({
     lastActiveTab: { id: tab.id, windowId: tab.windowId },
   });
+});
+
+// --- Switch back to previous tab when reminder tab closes ---
+chrome.tabs.onRemoved.addListener(async (tabId) => {
+  const { reminderTabId, tabBeforeReminder } = await chrome.storage.local.get([
+    "reminderTabId",
+    "tabBeforeReminder"
+  ]);
+
+  // If the closed tab is the reminder tab
+  if (tabId === reminderTabId && tabBeforeReminder) {
+    try {
+      // Switch back to the tab that was active before the reminder
+      await chrome.tabs.update(tabBeforeReminder, { active: true });
+      console.log("[See Grass] Switched back to previous tab.");
+    } catch (err) {
+      console.warn("[See Grass] Could not switch back to previous tab:", err);
+    }
+
+    // Clean up stored IDs
+    await chrome.storage.local.remove(["reminderTabId", "tabBeforeReminder"]);
+  }
 });
 
 // --- Listen for manual reset ---

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>See Some Grass</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('images/grass_1.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        .timer-wrap {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            margin: 32px 0;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        #timer {
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin: 0px 2px 0px 6px;
+            transition: opacity 0.3s ease;
+            transform: translateY(-2px);
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            margin-top: 20px;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            background: #399742;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #54aa55;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        button:active {
+            background: #35853d;
+            transform: translateY(0);
+        }
+
+        .arrow {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: pingpong 1.8s infinite ease-in-out;
+            transform: rotate(var(--rotate, 0deg));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+        }
+
+        .arrow[data-dir="up"] {
+            --rotate: -90deg;
+        }
+
+        .arrow[data-dir="down"] {
+            --rotate: 90deg;
+        }
+
+        .arrow[data-dir="left"] {
+            --rotate: 180deg;
+        }
+
+        @keyframes pingpong {
+
+            0%,
+            100% {
+                transform: rotate(var(--rotate)) translate(-10px, 0);
+            }
+
+            50% {
+                transform: rotate(var(--rotate)) translate(15px, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div id="arrow-container"></div>
+        <h1>🌿 Time to See Some Grass 🌿</h1>
+        <div class="subtitle">Look away for a few seconds and rest your eyes</div>
+        <div class="timer-wrap">
+            Closing in <span id="timer"></span>s
+        </div>
+        <button id="closeBtn">I'm refreshed!</button>
+    </div>
+
+    <script src="reminder.js"></script>
+</body>
+
+</html>
