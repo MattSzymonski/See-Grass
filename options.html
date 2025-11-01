@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>See Grass Settings</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #252525;
+            color: #e7e7e7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: rgb(81, 172, 81);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        label {
+            min-width: 180px;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        input[type="number"],
+        select {
+            padding: 6px 10px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .input-field-dropdown {
+            width: 100px;
+        }
+
+        .input-field-text {
+            width: 76px;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 8px;
+        }
+
+        input[type="checkbox"]:checked {
+            accent-color: #3d8f41;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 10px 16px;
+            font-size: 16px;
+            background: #399742;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: rgb(49, 136, 59);
+        }
+        button:active{ 
+            background: #297232;
+        }
+
+        .section {
+            background: rgb(48, 48, 48);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 325px;
+            max-width: 90vw;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>See Grass Settings</h1>
+
+    <div class="section">
+        <!-- Reminder Interval -->
+        <div class="option">
+            <label for="reminderInterval">Reminder interval (minutes)</label>
+            <input id="reminderInterval" type="number" min="1" value="20" aria-label="Reminder interval in minutes" class="input-field-text"/>
+        </div>
+
+        <!-- Reminder Length -->
+        <div class="option">
+            <label for="reminderLength">Reminder length (seconds)</label>
+            <input id="reminderLength" type="number" min="1" value="10000" aria-label="Reminder length in seconds" class="input-field-text"/>
+        </div>
+
+        <!-- Disable when screen-sharing -->
+        <div class="option">
+            <label for="disableWhenScreenSharing">
+            Disable when screen-sharing
+            </label>
+            <input type="checkbox" id="disableWhenScreenSharing" />
+        </div>
+
+        <!-- Show system notification -->
+        <div class="option">
+            <label for="showSystemNotification">
+            Show system notification
+            </label>
+            <input type="checkbox" id="showSystemNotification" />
+        </div>
+
+        <!-- Play sound -->
+        <div class="option">
+            <label for="playSound">Play sound</label>
+            <input type="checkbox" id="playSound" />
+        </div>
+
+        <!-- Sound -->
+        <div class="option">
+            <label for="sound">Play sound</label>
+            <select id="sound" class="input-field-dropdown">
+                <option value="system">System</option>
+                <option value="sound_1">Sound 1</option>
+                <option value="sound_2">Sound 2</option>
+            </select>
+        </div>
+
+        <!-- Arrow Direction -->
+        <div class="option">
+            <label for="arrowDirection">Arrow direction</label>
+            <select id="arrowDirection" class="input-field-dropdown">
+                <option value="up">Up</option>
+                <option value="down">Down</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+
+        <!-- Show Arrow -->
+        <div class="option">
+            <label for="showArrow">
+            Show arrow
+            </label>
+            <input type="checkbox" id="showArrow" />
+        </div>
+
+        <!-- Arrow Direction -->
+        <div class="option">
+            <label for="arrowDirection">Arrow direction</label>
+            <select id="arrowDirection" class="input-field-dropdown">
+                <option value="up">Up</option>
+                <option value="down">Down</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+
+        <button id="save">Save & Reset</button>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
