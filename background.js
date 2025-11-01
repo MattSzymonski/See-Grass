@@ -128,9 +128,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
   // Customize message 
   // Count resignations?
-  // Focus on browser (or open new tab)
-  // Export and import settings (json)
-  // Icon with eye?
   // Count 15 sec of inactivity (start after 5 seconds, end after reminder length)?
 
   const {

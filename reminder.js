@@ -48,7 +48,9 @@
     // Close button
     document.getElementById("closeBtn").addEventListener("click", () => {
         clearInterval(countdown);
-        window.close();
+        setTimeout(() => {
+            window.close();
+        }, 150);
     });
 
     // Auto-close after reminder length
