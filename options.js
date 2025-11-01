@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const {
     reminderInterval,
     reminderLength,
+    showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
     playSound,
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } = await chrome.storage.local.get([
     "reminderInterval",
     "reminderLength",
+    "showReminderPage",
     "disableWhenScreenSharing",
     "showSystemNotification",
     "playSound",
@@ -23,12 +25,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Set form values (with defaults)
   document.getElementById("reminderInterval").value = reminderInterval ?? 20;
   document.getElementById("reminderLength").value = reminderLength ?? 10;
+  document.getElementById("showReminderPage").checked = showReminderPage ?? true;
   document.getElementById("disableWhenScreenSharing").checked = disableWhenScreenSharing ?? true;
   document.getElementById("showSystemNotification").checked = showSystemNotification ?? false;
   document.getElementById("playSound").checked = playSound ?? false;
   document.getElementById("sound").value = sound ?? "system";
   document.getElementById("showArrow").checked = showArrow ?? false;
   document.getElementById("arrowDirection").value = arrowDirection ?? "up";
+
+  // Setup toggle visibility handlers
+  const playSoundCheckbox = document.getElementById("playSound");
+  const soundOption = document.getElementById("soundOption");
+  const showArrowCheckbox = document.getElementById("showArrow");
+  const arrowDirectionOption = document.getElementById("arrowDirectionOption");
+
+  // Function to toggle sound dropdown visibility
+  function toggleSoundOption() {
+    soundOption.style.display = playSoundCheckbox.checked ? "flex" : "none";
+  }
+
+  // Function to toggle arrow direction dropdown visibility
+  function toggleArrowDirectionOption() {
+    arrowDirectionOption.style.display = showArrowCheckbox.checked ? "flex" : "none";
+  }
+
+  // Set initial visibility
+  toggleSoundOption();
+  toggleArrowDirectionOption();
+
+  // Add event listeners
+  playSoundCheckbox.addEventListener("change", toggleSoundOption);
+  showArrowCheckbox.addEventListener("change", toggleArrowDirectionOption);
 });
 
 // Save settings and reset timer
@@ -39,6 +66,7 @@ document.getElementById("save").addEventListener("click", async () => {
   const reminderLength = Number(
     document.getElementById("reminderLength").value
   );
+  const showReminderPage = document.getElementById("showReminderPage").checked;
   const disableWhenScreenSharing = document.getElementById(
     "disableWhenScreenSharing"
   ).checked;
@@ -54,6 +82,7 @@ document.getElementById("save").addEventListener("click", async () => {
   await chrome.storage.local.set({
     reminderInterval,
     reminderLength,
+    showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
     playSound,
@@ -65,6 +94,7 @@ document.getElementById("save").addEventListener("click", async () => {
   console.log("[See Grass] Settings saved:", {
     reminderInterval,
     reminderLength,
+    showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
     playSound,

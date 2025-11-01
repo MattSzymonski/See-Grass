@@ -1,6 +1,25 @@
 const DEFAULT_INTERVAL_MIN = 20;
 const DEBUG_INTERVAL_SEC = 10;
 
+// --- Helper: Setup offscreen document for audio playback ---
+async function setupOffscreenDocument() {
+  // Check if offscreen document already exists
+  const existingContexts = await chrome.runtime.getContexts({
+    contextTypes: ['OFFSCREEN_DOCUMENT'],
+    documentUrls: [chrome.runtime.getURL('offscreen.html')]
+  });
+
+  if (existingContexts.length > 0) {
+    return; // Already exists
+  }
+
+  // Create offscreen document
+  await chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: ['AUDIO_PLAYBACK'],
+    justification: 'Play reminder sound when reminder page is disabled'
+  });
+}
 
 // --- Helper: Set reminder timer ---
 async function setReminderTimer(intervalMs) {
@@ -53,11 +72,13 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   const {
     reminderInterval,
     reminderLength,
+    showReminderPage,
     disableWhenScreenSharing,
     lastActiveTab,
   } = await chrome.storage.local.get([
     "reminderInterval",
     "reminderLength",
+    "showReminderPage",
     "disableWhenScreenSharing",
     "lastActiveTab",
   ]);
@@ -75,30 +96,35 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 
-  // --- Store the current active tab before opening reminder ---
-  const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (currentTab) {
-    await chrome.storage.local.set({ tabBeforeReminder: currentTab.id });
-  }
-
-  // --- Open reminder in new tab ---
-  const reminderUrl = chrome.runtime.getURL("reminder.html");
-  const newTab = await chrome.tabs.create({ url: reminderUrl, active: true });
-
-  // Store reminder tab ID so we can switch back after it closes
-  await chrome.storage.local.set({ reminderTabId: newTab.id });
-
-  // Unminimize and bring window to front
-  if (lastActiveTab && lastActiveTab.windowId) {
-    const window = await chrome.windows.get(lastActiveTab.windowId);
-    if (window.state === "minimized") {
-      await chrome.windows.update(lastActiveTab.windowId, { state: "normal" });
+  // --- Open reminder page if enabled ---
+  if (showReminderPage ?? true) {
+    // Store the current active tab before opening reminder
+    const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (currentTab) {
+      await chrome.storage.local.set({ tabBeforeReminder: currentTab.id });
     }
-    // drawAttention brings the window to the top and makes it flash in the taskbar
-    await chrome.windows.update(lastActiveTab.windowId, { focused: true, drawAttention: true });
-  }
 
-  console.log("[See Grass] Opened reminder tab and brought browser to front.");
+    // Open reminder in new tab
+    const reminderUrl = chrome.runtime.getURL("reminder.html");
+    const newTab = await chrome.tabs.create({ url: reminderUrl, active: true });
+
+    // Store reminder tab ID so we can switch back after it closes
+    await chrome.storage.local.set({ reminderTabId: newTab.id });
+
+    // Unminimize and bring window to front
+    if (lastActiveTab && lastActiveTab.windowId) {
+      const window = await chrome.windows.get(lastActiveTab.windowId);
+      if (window.state === "minimized") {
+        await chrome.windows.update(lastActiveTab.windowId, { state: "normal" });
+      }
+      // drawAttention brings the window to the top and makes it flash in the taskbar
+      await chrome.windows.update(lastActiveTab.windowId, { focused: true, drawAttention: true });
+    }
+
+    console.log("[See Grass] Opened reminder tab and brought browser to front.");
+  } else {
+    console.log("[See Grass] Reminder page disabled, showing notification/sound only.");
+  }
 
   // Customize message 
   // Count resignations?
@@ -126,6 +152,14 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
       message: "Look away from the screen for a few seconds!",
       silent: !(playSound === true && sound === "system")
     });
+  }
+
+  // --- Play custom sound when reminder page is disabled ---
+  // (When reminder page is shown, the sound is played by reminder.js)
+  if (!(showReminderPage ?? true) && playSound && sound !== "system") {
+    await setupOffscreenDocument();
+    chrome.runtime.sendMessage({ type: "PLAY_SOUND", sound: sound });
+    console.log("[See Grass] Playing custom sound via offscreen document.");
   }
 
   // --- Schedule next reminder ---
@@ -169,16 +203,23 @@ chrome.runtime.onMessage.addListener(async (message) => {
   }
 });
 
-// --- On startup ---
-chrome.runtime.onStartup.addListener(async () => {
+// --- Initialize timer function ---
+async function initializeTimer() {
   const { reminderInterval } = await chrome.storage.local.get("reminderInterval");
   const intervalMs = DEBUG_INTERVAL_SEC ? DEBUG_INTERVAL_SEC * 1000 : (reminderInterval ?? DEFAULT_INTERVAL_MIN) * 60 * 1000;
   await setReminderTimer(intervalMs);
+  console.log("[See Grass] Timer initialized.");
+}
+
+// --- On startup ---
+chrome.runtime.onStartup.addListener(async () => {
+  await initializeTimer();
 });
 
 // --- On install ---
 chrome.runtime.onInstalled.addListener(async () => {
-  const { reminderInterval } = await chrome.storage.local.get("reminderInterval");
-  const intervalMs = DEBUG_INTERVAL_SEC ? DEBUG_INTERVAL_SEC * 1000 : (reminderInterval ?? DEFAULT_INTERVAL_MIN) * 60 * 1000;
-  await setReminderTimer(intervalMs);
+  await initializeTimer();
 });
+
+// --- Initialize timer immediately when service worker loads ---
+initializeTimer();

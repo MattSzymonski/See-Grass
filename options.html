@@ -26,7 +26,7 @@
 
         h1 {
             font-family: 'Inter', sans-serif;
-            font-size: 26px;
+            font-size: 30px;
             color: rgb(81, 172, 81);
             margin-bottom: 24px;
             text-align: center;
@@ -41,15 +41,15 @@
         }
 
         label {
-            min-width: 180px;
+            min-width: 220px;
             font-weight: 400;
-            font-size: 13px;
+            font-size: 15px;
         }
 
         input[type="number"],
         select {
             padding: 6px 10px;
-            font-size: 12px;
+            font-size: 14px;
             border: 1px solid #ccc;
             border-radius: 6px;
         }
@@ -97,10 +97,16 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 325px;
+            width: 385px;
             max-width: 90vw;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Hide sub-options by default to prevent flash before JS loads */
+        #soundOption,
+        #arrowDirectionOption {
+            display: none;
         }
     </style>
 </head>
@@ -121,6 +127,14 @@
             <label for="reminderLength">Reminder length (seconds)</label>
             <input id="reminderLength" type="number" min="1" value="10000" aria-label="Reminder length in seconds"
                 class="input-field-text" />
+        </div>
+
+        <!-- Show reminder page -->
+        <div class="option">
+            <label for="showReminderPage">
+                Show reminder page
+            </label>
+            <input type="checkbox" id="showReminderPage" />
         </div>
 
         <!-- Disable when screen-sharing -->
@@ -146,23 +160,12 @@
         </div>
 
         <!-- Sound -->
-        <div class="option">
-            <label for="sound">Play sound</label>
+        <div class="option" id="soundOption" style="margin-left: 16px;">
+            <label for="sound">Sound</label>
             <select id="sound" class="input-field-dropdown">
                 <option value="system">System</option>
                 <option value="sound_1">Sound 1</option>
                 <option value="sound_2">Sound 2</option>
-            </select>
-        </div>
-
-        <!-- Arrow Direction -->
-        <div class="option">
-            <label for="arrowDirection">Arrow direction</label>
-            <select id="arrowDirection" class="input-field-dropdown">
-                <option value="up">Up</option>
-                <option value="down">Down</option>
-                <option value="left">Left</option>
-                <option value="right">Right</option>
             </select>
         </div>
 
@@ -175,7 +178,7 @@
         </div>
 
         <!-- Arrow Direction -->
-        <div class="option">
+        <div class="option" id="arrowDirectionOption" style="margin-left: 16px;">
             <label for="arrowDirection">Arrow direction</label>
             <select id="arrowDirection" class="input-field-dropdown">
                 <option value="up">Up</option>
