@@ -3,6 +3,8 @@
     "name": "See Grass",
     "version": "1.0.0",
     "description": "Reminds you to rest your eyes and maybe go see some grass after too much screen time",
+    "author": "MattSzymonski",
+    "homepage_url": "https://github.com/MattSzymonski/See-Grass",
     "permissions": [
         "storage",
         "alarms",
