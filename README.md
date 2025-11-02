@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="icons/see_grass_logo.svg">
-        <img src="icons/see_grass_logo.svg" width="300">
+        <img src="icons/see_grass_logo.svg" width="150">
     </picture>
 </p>
 
