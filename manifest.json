@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "See Grass",
     "version": "1.0.0",
-    "description": "Reminds you to rest your eyes and maybe go see some grass after too much screen time",
+    "description": "A Chrome extension that reminds you to rest your eyes and maybe go see some grass to take a break from screen time.",
     "author": "MattSzymonski",
     "homepage_url": "https://github.com/MattSzymonski/See-Grass",
     "permissions": [
@@ -22,12 +22,15 @@
     },
     "options_page": "options.html",
     "icons": {
-        "128": "icons/grass_icon128.png"
+        "16": "icons/see_grass_logo_16.png",
+        "32": "icons/see_grass_logo_32.png",
+        "48": "icons/see_grass_logo_48.png",
+        "128": "icons/see_grass_logo_128.png"
     },
     "action": {
         "default_title": "See Grass",
         "default_icon": {
-            "128": "icons/grass_icon128.png"
+            "128": "icons/see_grass_simple_icon.png"
         },
         "default_popup": "popup.html"
     },

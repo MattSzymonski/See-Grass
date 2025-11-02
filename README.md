@@ -7,7 +7,7 @@
 
 # See Grass - Eye Care Reminder Extension
 
-A Chrome extension that reminds you to rest your eyes and take breaks from screen time.
+A Chrome extension that reminds you to rest your eyes and maybe go see some grass to take a break from screen time.
 
 ## Features
 
