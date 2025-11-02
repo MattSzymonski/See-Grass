@@ -12,7 +12,7 @@
         "offscreen"
     ],
     "host_permissions": [
-        "<all_urls>"
+        "*://meet.google.com/*"
     ],
     "background": {
         "service_worker": "background.js",
@@ -20,24 +20,21 @@
     },
     "options_page": "options.html",
     "icons": {
-        "128": "icons/icon128-grass.png"
+        "128": "icons/grass_icon128.png"
     },
     "action": {
         "default_title": "See Grass",
         "default_icon": {
-            "128": "icons/icon128-grass.png"
+            "128": "icons/grass_icon128.png"
         },
         "default_popup": "popup.html"
     },
     "web_accessible_resources": [
         {
             "resources": [
-                "overlay.js",
                 "sounds/sound_1.mp3",
                 "sounds/sound_2.mp3",
-                "images/grass_1.jpg",
-                "reminder.html",
-                "reminder.js"
+                "images/grass_1.webp"
             ],
             "matches": [
                 "<all_urls>"

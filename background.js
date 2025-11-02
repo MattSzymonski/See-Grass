@@ -1,5 +1,5 @@
 const DEFAULT_INTERVAL_MIN = 20;
-const DEBUG_INTERVAL_SEC = 10;
+const DEBUG_INTERVAL_SEC = 0; // Set to 0 for production, or number of seconds for testing
 
 // --- Helper: Setup offscreen document for audio playback ---
 async function setupOffscreenDocument() {
@@ -125,10 +125,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   } else {
     console.log("[See Grass] Reminder page disabled, showing notification/sound only.");
   }
-
-  // Customize message 
-  // Count resignations?
-  // Count 15 sec of inactivity (start after 5 seconds, end after reminder length)?
 
   const {
     showSystemNotification,

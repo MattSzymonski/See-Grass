@@ -7,7 +7,7 @@
         "sound"
     ]);
 
-    const DEBUG_REMINDER_LENGTH = 5;
+    const DEBUG_REMINDER_LENGTH = 0; // Set to 0 for production, or number of seconds for testing
 
     // Show arrow if enabled
     if (showArrow) {

@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("reminderLength").value = reminderLength ?? 10;
   document.getElementById("showReminderPage").checked = showReminderPage ?? true;
   document.getElementById("disableWhenScreenSharing").checked = disableWhenScreenSharing ?? true;
-  document.getElementById("showSystemNotification").checked = showSystemNotification ?? false;
-  document.getElementById("playSound").checked = playSound ?? false;
+  document.getElementById("showSystemNotification").checked = showSystemNotification ?? true;
+  document.getElementById("playSound").checked = playSound ?? true;
   document.getElementById("sound").value = sound ?? "system";
   document.getElementById("showArrow").checked = showArrow ?? false;
-  document.getElementById("arrowDirection").value = arrowDirection ?? "up";
+  document.getElementById("arrowDirection").value = arrowDirection ?? "right";
 
   // Setup toggle visibility handlers
   const playSoundCheckbox = document.getElementById("playSound");
