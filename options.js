@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
-    playSound,
-    sound,
+    playSoundOnStart,
+    soundOnStart,
+    playSoundOnEnd,
+    soundOnEnd,
     showArrow,
     arrowDirection,
   } = await chrome.storage.local.get([
@@ -16,8 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     "showReminderPage",
     "disableWhenScreenSharing",
     "showSystemNotification",
-    "playSound",
-    "sound",
+    "playSoundOnStart",
+    "soundOnStart",
+    "playSoundOnEnd",
+    "soundOnEnd",
     "showArrow",
     "arrowDirection",
   ]);
@@ -28,20 +32,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("showReminderPage").checked = showReminderPage ?? true;
   document.getElementById("disableWhenScreenSharing").checked = disableWhenScreenSharing ?? true;
   document.getElementById("showSystemNotification").checked = showSystemNotification ?? true;
-  document.getElementById("playSound").checked = playSound ?? true;
-  document.getElementById("sound").value = sound ?? "system";
+  document.getElementById("playSoundOnStart").checked = playSoundOnStart ?? true;
+  document.getElementById("soundOnStart").value = soundOnStart ?? "system";
+  document.getElementById("playSoundOnEnd").checked = playSoundOnEnd ?? false;
+  document.getElementById("soundOnEnd").value = soundOnEnd ?? "system";
   document.getElementById("showArrow").checked = showArrow ?? false;
   document.getElementById("arrowDirection").value = arrowDirection ?? "right";
 
   // Setup toggle visibility handlers
-  const playSoundCheckbox = document.getElementById("playSound");
-  const soundOption = document.getElementById("soundOption");
+  const playSoundOnStartCheckbox = document.getElementById("playSoundOnStart");
+  const soundOnStartOption = document.getElementById("soundOnStartOption");
+  const playSoundOnEndCheckbox = document.getElementById("playSoundOnEnd");
+  const soundOnEndOption = document.getElementById("soundOnEndOption");
   const showArrowCheckbox = document.getElementById("showArrow");
   const arrowDirectionOption = document.getElementById("arrowDirectionOption");
 
-  // Function to toggle sound dropdown visibility
-  function toggleSoundOption() {
-    soundOption.style.display = playSoundCheckbox.checked ? "flex" : "none";
+  // Function to toggle sound on start dropdown visibility
+  function toggleSoundOnStartOption() {
+    soundOnStartOption.style.display = playSoundOnStartCheckbox.checked ? "flex" : "none";
+  }
+
+  // Function to toggle sound on end dropdown visibility
+  function toggleSoundOnEndOption() {
+    soundOnEndOption.style.display = playSoundOnEndCheckbox.checked ? "flex" : "none";
   }
 
   // Function to toggle arrow direction dropdown visibility
@@ -50,11 +63,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Set initial visibility
-  toggleSoundOption();
+  toggleSoundOnStartOption();
+  toggleSoundOnEndOption();
   toggleArrowDirectionOption();
 
   // Add event listeners
-  playSoundCheckbox.addEventListener("change", toggleSoundOption);
+  playSoundOnStartCheckbox.addEventListener("change", toggleSoundOnStartOption);
+  playSoundOnEndCheckbox.addEventListener("change", toggleSoundOnEndOption);
   showArrowCheckbox.addEventListener("change", toggleArrowDirectionOption);
 });
 
@@ -73,8 +88,10 @@ document.getElementById("save").addEventListener("click", async () => {
   const showSystemNotification = document.getElementById(
     "showSystemNotification"
   ).checked;
-  const playSound = document.getElementById("playSound").checked;
-  const sound = document.getElementById("sound").value;
+  const playSoundOnStart = document.getElementById("playSoundOnStart").checked;
+  const soundOnStart = document.getElementById("soundOnStart").value;
+  const playSoundOnEnd = document.getElementById("playSoundOnEnd").checked;
+  const soundOnEnd = document.getElementById("soundOnEnd").value;
   const showArrow = document.getElementById("showArrow").checked;
   const arrowDirection = document.getElementById("arrowDirection").value;
 
@@ -85,8 +102,10 @@ document.getElementById("save").addEventListener("click", async () => {
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
-    playSound,
-    sound,
+    playSoundOnStart,
+    soundOnStart,
+    playSoundOnEnd,
+    soundOnEnd,
     showArrow,
     arrowDirection,
   });
@@ -97,8 +116,10 @@ document.getElementById("save").addEventListener("click", async () => {
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
-    playSound,
-    sound,
+    playSoundOnStart,
+    soundOnStart,
+    playSoundOnEnd,
+    soundOnEnd,
     showArrow,
     arrowDirection,
   });

@@ -128,30 +128,30 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
   const {
     showSystemNotification,
-    playSound,
-    sound
+    playSoundOnStart,
+    soundOnStart
   } = await chrome.storage.local.get([
     "showSystemNotification",
-    "playSound",
-    "sound"
+    "playSoundOnStart",
+    "soundOnStart"
   ]);
 
   // --- Show notification with sound ---
   if (showSystemNotification) {
     chrome.notifications.create({
       type: "basic",
-      iconUrl: chrome.runtime.getURL("icons/icon128-grass.png"),
+      iconUrl: chrome.runtime.getURL("icons/see_grass_logo_128.png"),
       title: "🌿 Time to See Some Grass",
       message: "Look away from the screen for a few seconds!",
-      silent: !(playSound === true && sound === "system")
+      silent: !(playSoundOnStart === true && soundOnStart === "system")
     });
   }
 
   // --- Play custom sound when reminder page is disabled ---
   // (When reminder page is shown, the sound is played by reminder.js)
-  if (!(showReminderPage ?? true) && playSound && sound !== "system") {
+  if (!(showReminderPage ?? true) && playSoundOnStart && soundOnStart !== "system") {
     await setupOffscreenDocument();
-    chrome.runtime.sendMessage({ type: "PLAY_SOUND", sound: sound });
+    chrome.runtime.sendMessage({ type: "PLAY_SOUND", sound: soundOnStart });
     console.log("[See Grass] Playing custom sound via offscreen document.");
   }
 

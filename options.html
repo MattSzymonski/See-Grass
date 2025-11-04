@@ -104,7 +104,8 @@
         }
 
         /* Hide sub-options by default to prevent flash before JS loads */
-        #soundOption,
+        #soundOnStartOption,
+        #soundOnEndOption,
         #arrowDirectionOption {
             display: none;
         }
@@ -174,16 +175,32 @@
             <input type="checkbox" id="showSystemNotification" />
         </div>
 
-        <!-- Play sound -->
+        <!-- Play sound on reminder start -->
         <div class="option">
-            <label for="playSound">Play sound</label>
-            <input type="checkbox" id="playSound" />
+            <label for="playSoundOnStart">Play sound on reminder start</label>
+            <input type="checkbox" id="playSoundOnStart" />
         </div>
 
-        <!-- Sound -->
-        <div class="option" id="soundOption" style="margin-left: 16px;">
-            <label for="sound">Sound</label>
-            <select id="sound" class="input-field-dropdown">
+        <!-- Sound on start -->
+        <div class="option" id="soundOnStartOption" style="margin-left: 16px;">
+            <label for="soundOnStart">Sound</label>
+            <select id="soundOnStart" class="input-field-dropdown">
+                <option value="system">System</option>
+                <option value="sound_1">Sound 1</option>
+                <option value="sound_2">Sound 2</option>
+            </select>
+        </div>
+
+        <!-- Play sound on reminder end -->
+        <div class="option">
+            <label for="playSoundOnEnd">Play sound on reminder end</label>
+            <input type="checkbox" id="playSoundOnEnd" />
+        </div>
+
+        <!-- Sound on end -->
+        <div class="option" id="soundOnEndOption" style="margin-left: 16px;">
+            <label for="soundOnEnd">Sound</label>
+            <select id="soundOnEnd" class="input-field-dropdown">
                 <option value="system">System</option>
                 <option value="sound_1">Sound 1</option>
                 <option value="sound_2">Sound 2</option>
