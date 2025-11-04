@@ -124,6 +124,17 @@ document.getElementById("save").addEventListener("click", async () => {
     arrowDirection,
   });
 
+  // Close reminder tab if it's open
+  const { reminderTabId } = await chrome.storage.local.get("reminderTabId");
+  if (reminderTabId) {
+    try {
+      await chrome.tabs.remove(reminderTabId);
+      console.log("[See Grass] Closed reminder tab on settings save.");
+    } catch (err) {
+      console.warn("[See Grass] Could not close reminder tab:", err);
+    }
+  }
+
   // Reset the reminder timer in background
   chrome.runtime.sendMessage({
     type: "RESET_TIMER",
