@@ -139,3 +139,36 @@ function showSavedPopup() {
     setTimeout(() => popup.remove(), 500);
   }, 1500);
 }
+
+// --- Debug button: Trigger reminder in 5 seconds ---
+document.getElementById("debugButton").addEventListener("click", () => {
+  chrome.runtime.sendMessage({
+    type: "RESET_TIMER",
+    intervalMs: 5000, // 5 seconds
+  });
+
+  // Show debug confirmation
+  const popup = document.createElement("div");
+  popup.textContent = "Reminder in 5 seconds";
+  Object.assign(popup.style, {
+    position: "fixed",
+    bottom: "30px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    background: "#d37f00ff",
+    color: "white",
+    padding: "10px 20px",
+    borderRadius: "8px",
+    fontSize: "14px",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
+    opacity: "0",
+    transition: "opacity 0.3s ease",
+    zIndex: "9999",
+  });
+  document.body.appendChild(popup);
+  requestAnimationFrame(() => (popup.style.opacity = "1"));
+  setTimeout(() => {
+    popup.style.opacity = "0";
+    setTimeout(() => popup.remove(), 500);
+  }, 2000);
+});
