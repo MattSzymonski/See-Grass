@@ -96,7 +96,7 @@
             font-size: 1.4rem;
             margin: 0px 2px 0px 6px;
             transition: opacity 0.3s ease;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         button {
@@ -134,30 +134,69 @@
             font-size: 4rem;
             display: inline-block;
             animation: pingpong 1.8s infinite ease-in-out;
-            transform: rotate(var(--rotate, 0deg));
         }
 
         .arrow[data-dir="up"] {
-            --rotate: -90deg;
+            animation-name: pingpong-up;
         }
 
         .arrow[data-dir="down"] {
-            --rotate: 90deg;
+            animation-name: pingpong-down;
         }
 
         .arrow[data-dir="left"] {
-            --rotate: 180deg;
+            animation-name: pingpong-left;
         }
 
-        @keyframes pingpong {
+        .arrow[data-dir="right"] {
+            animation-name: pingpong-right;
+        }
+
+        @keyframes pingpong-right {
 
             0%,
             100% {
-                transform: rotate(var(--rotate)) translate(-10px, 0);
+                transform: rotate(0deg) translateX(-10px);
             }
 
             50% {
-                transform: rotate(var(--rotate)) translate(15px, 0);
+                transform: rotate(0deg) translateX(15px);
+            }
+        }
+
+        @keyframes pingpong-up {
+
+            0%,
+            100% {
+                transform: rotate(-90deg) translateX(-10px);
+            }
+
+            50% {
+                transform: rotate(-90deg) translateX(15px);
+            }
+        }
+
+        @keyframes pingpong-down {
+
+            0%,
+            100% {
+                transform: rotate(90deg) translateX(-10px);
+            }
+
+            50% {
+                transform: rotate(90deg) translateX(15px);
+            }
+        }
+
+        @keyframes pingpong-left {
+
+            0%,
+            100% {
+                transform: rotate(180deg) translateX(-10px);
+            }
+
+            50% {
+                transform: rotate(180deg) translateX(15px);
             }
         }
     </style>
