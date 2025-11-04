@@ -1,12 +1,10 @@
 (async () => {
-    const { showArrow, arrowDirection, reminderLength, playSoundOnStart, soundOnStart, playSoundOnEnd, soundOnEnd } = await chrome.storage.local.get([
+    const { showArrow, arrowDirection, reminderLength, playSoundOnStart, soundOnStart } = await chrome.storage.local.get([
         "showArrow",
         "arrowDirection",
         "reminderLength",
         "playSoundOnStart",
-        "soundOnStart",
-        "playSoundOnEnd",
-        "soundOnEnd"
+        "soundOnStart"
     ]);
 
     const DEBUG_REMINDER_LENGTH = 0; // Set to 0 for production, or number of seconds for testing
@@ -33,21 +31,11 @@
     const timerEl = document.getElementById("timer");
     timerEl.textContent = remaining;
 
-    // Function to play end sound
-    function playEndSound() {
-        if (playSoundOnEnd && soundOnEnd !== "system") {
-            const audio = new Audio(chrome.runtime.getURL(`sounds/${soundOnEnd}.mp3`));
-            audio.volume = 0.8;
-            audio.play().catch(err => console.warn("End audio play failed:", err));
-        }
-    }
-
     const countdown = setInterval(() => {
         remaining--;
         if (remaining <= 0) {
             clearInterval(countdown);
-            playEndSound();
-            setTimeout(() => window.close(), 100); // Small delay to let sound start
+            window.close();
             return;
         }
         timerEl.style.opacity = "0.3";
@@ -60,14 +48,12 @@
     // Close button
     document.getElementById("closeBtn").addEventListener("click", () => {
         clearInterval(countdown);
-        playEndSound();
-        setTimeout(() => window.close(), 100); // Small delay to let sound start
+        window.close();
     });
 
     // Auto-close after reminder length
     setTimeout(() => {
         clearInterval(countdown);
-        playEndSound();
-        setTimeout(() => window.close(), 100); // Small delay to let sound start
+        window.close();
     }, remaining * 1000);
 })();
