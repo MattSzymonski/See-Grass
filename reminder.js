@@ -1,13 +1,19 @@
 (async () => {
-    const { showArrow, arrowDirection, reminderLength, playSoundOnStart, soundOnStart } = await chrome.storage.local.get([
+    const { showArrow, arrowDirection, reminderLength, playSoundOnStart, soundOnStart, customBackgroundUrl } = await chrome.storage.local.get([
         "showArrow",
         "arrowDirection",
         "reminderLength",
         "playSoundOnStart",
-        "soundOnStart"
+        "soundOnStart",
+        "customBackgroundUrl"
     ]);
 
     const DEBUG_REMINDER_LENGTH = 0; // Set to 0 for production, or number of seconds for testing
+
+    // Set custom background if provided
+    if (customBackgroundUrl) {
+        document.body.style.backgroundImage = `url('${customBackgroundUrl}')`;
+    }
 
     // Show arrow if enabled
     if (showArrow) {

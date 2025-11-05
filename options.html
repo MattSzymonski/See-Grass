@@ -158,7 +158,7 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 385px;
+            width: 450px;
             max-width: 90vw;
             display: flex;
             flex-direction: column;
@@ -218,6 +218,19 @@
                     class="input-field-text" />
                 <span class="tooltip-icon">?
                     <span class="tooltip-text">How long the reminder stays on screen</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Custom background image -->
+        <div class="option">
+            <label for="customBackgroundUrl">Custom background image</label>
+            <div class="option-tooltip-group">
+                <input id="customBackgroundUrl" type="text" placeholder="https://a.com/img.jpg"
+                    aria-label="Custom background image URL"
+                    style="width: 130px; padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px;" />
+                <span class="tooltip-icon">?
+                    <span class="tooltip-text">URL to custom background image (leave empty for default)</span>
                 </span>
             </div>
         </div>

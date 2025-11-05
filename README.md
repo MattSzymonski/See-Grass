@@ -109,3 +109,7 @@ The extension requests the following permissions:
 ## Contributing
 
 Suggestions and improvements are welcome!
+
+## TODO
+- Add more sounds
+- Rewrite tooltips

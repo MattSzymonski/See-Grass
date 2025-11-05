@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const {
     reminderInterval,
     reminderLength,
+    customBackgroundUrl,
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } = await chrome.storage.local.get([
     "reminderInterval",
     "reminderLength",
+    "customBackgroundUrl",
     "showReminderPage",
     "disableWhenScreenSharing",
     "showSystemNotification",
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Set form values (with defaults)
   document.getElementById("reminderInterval").value = reminderInterval ?? 20;
   document.getElementById("reminderLength").value = reminderLength ?? 10;
+  document.getElementById("customBackgroundUrl").value = customBackgroundUrl ?? "";
   document.getElementById("showReminderPage").checked = showReminderPage ?? true;
   document.getElementById("disableWhenScreenSharing").checked = disableWhenScreenSharing ?? true;
   document.getElementById("showSystemNotification").checked = showSystemNotification ?? true;
@@ -81,6 +84,7 @@ document.getElementById("save").addEventListener("click", async () => {
   const reminderLength = Number(
     document.getElementById("reminderLength").value
   );
+  const customBackgroundUrl = document.getElementById("customBackgroundUrl").value.trim();
   const showReminderPage = document.getElementById("showReminderPage").checked;
   const disableWhenScreenSharing = document.getElementById(
     "disableWhenScreenSharing"
@@ -99,6 +103,7 @@ document.getElementById("save").addEventListener("click", async () => {
   await chrome.storage.local.set({
     reminderInterval,
     reminderLength,
+    customBackgroundUrl,
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
@@ -113,6 +118,7 @@ document.getElementById("save").addEventListener("click", async () => {
   console.log("[See Grass] Settings saved:", {
     reminderInterval,
     reminderLength,
+    customBackgroundUrl,
     showReminderPage,
     disableWhenScreenSharing,
     showSystemNotification,
