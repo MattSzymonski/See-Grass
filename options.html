@@ -164,9 +164,29 @@
             flex-direction: column;
         }
 
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgb(81, 172, 81);
+            margin: 10px 0 12px 0;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .section-separator {
+            height: 1px;
+            background: #555;
+            margin: 16px 0;
+            border: none;
+        }
+
         /* Hide sub-options by default to prevent flash before JS loads */
         #soundOnStartOption,
         #soundOnEndOption,
+        #customBackgroundOption,
+        #showArrowOption,
         #arrowDirectionOption {
             display: none;
         }
@@ -198,6 +218,9 @@
     <h1>See Grass Settings</h1>
 
     <div class="section">
+        <!-- TIMING SETTINGS -->
+        <h2 class="section-title">Timing</h2>
+
         <!-- Reminder Interval -->
         <div class="option">
             <label for="reminderInterval">Reminder interval (minutes)</label>
@@ -222,8 +245,24 @@
             </div>
         </div>
 
-        <!-- Custom background image -->
+        <hr class="section-separator">
+
+        <!-- BEHAVIOR -->
+        <h2 class="section-title">Behavior</h2>
+
+        <!-- Show reminder page -->
         <div class="option">
+            <label for="showReminderPage">Show reminder page</label>
+            <div class="option-tooltip-group">
+                <input type="checkbox" id="showReminderPage" />
+                <span class="tooltip-icon">?
+                    <span class="tooltip-text">Opens a full-screen tab with grass background</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Custom background image -->
+        <div class="option" id="customBackgroundOption" style="margin-left: 16px;">
             <label for="customBackgroundUrl">Custom background image</label>
             <div class="option-tooltip-group">
                 <input id="customBackgroundUrl" type="text" placeholder="https://a.com/img.jpg"
@@ -235,13 +274,40 @@
             </div>
         </div>
 
-        <!-- Show reminder page -->
-        <div class="option">
-            <label for="showReminderPage">Show reminder page</label>
+        <!-- Show Arrow -->
+        <div class="option" id="showArrowOption" style="margin-left: 16px;">
+            <label for="showArrow">Show arrow</label>
             <div class="option-tooltip-group">
-                <input type="checkbox" id="showReminderPage" />
+                <input type="checkbox" id="showArrow" />
                 <span class="tooltip-icon">?
-                    <span class="tooltip-text">Opens a full-screen tab with grass background</span>
+                    <span class="tooltip-text">Displays an arrow on the reminder page</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Arrow Direction -->
+        <div class="option" id="arrowDirectionOption" style="margin-left: 32px;">
+            <label for="arrowDirection">Arrow direction</label>
+            <div class="option-tooltip-group">
+                <select id="arrowDirection" class="input-field-dropdown">
+                    <option value="up">Up</option>
+                    <option value="down">Down</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+                <span class="tooltip-icon">?
+                    <span class="tooltip-text">Choose which direction the arrow points</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Show system notification -->
+        <div class="option">
+            <label for="showSystemNotification">Show system notification</label>
+            <div class="option-tooltip-group">
+                <input type="checkbox" id="showSystemNotification" />
+                <span class="tooltip-icon">?
+                    <span class="tooltip-text">Displays a desktop notification when reminder starts</span>
                 </span>
             </div>
         </div>
@@ -257,16 +323,10 @@
             </div>
         </div>
 
-        <!-- Show system notification -->
-        <div class="option">
-            <label for="showSystemNotification">Show system notification</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="showSystemNotification" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Displays a desktop notification when reminder starts</span>
-                </span>
-            </div>
-        </div>
+        <hr class="section-separator">
+
+        <!-- AUDIO -->
+        <h2 class="section-title">Audio</h2>
 
         <!-- Play sound on reminder start -->
         <div class="option">
@@ -316,33 +376,6 @@
                 </select>
                 <span class="tooltip-icon">?
                     <span class="tooltip-text">Choose which sound to play</span>
-                </span>
-            </div>
-        </div>
-
-        <!-- Show Arrow -->
-        <div class="option">
-            <label for="showArrow">Show arrow</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="showArrow" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Displays an arrow on the reminder page</span>
-                </span>
-            </div>
-        </div>
-
-        <!-- Arrow Direction -->
-        <div class="option" id="arrowDirectionOption" style="margin-left: 16px;">
-            <label for="arrowDirection">Arrow direction</label>
-            <div class="option-tooltip-group">
-                <select id="arrowDirection" class="input-field-dropdown">
-                    <option value="up">Up</option>
-                    <option value="down">Down</option>
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
-                </select>
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Choose which direction the arrow points</span>
                 </span>
             </div>
         </div>

@@ -43,12 +43,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("arrowDirection").value = arrowDirection ?? "right";
 
   // Setup toggle visibility handlers
+  const showReminderPageCheckbox = document.getElementById("showReminderPage");
+  const customBackgroundOption = document.getElementById("customBackgroundOption");
+  const showArrowOption = document.getElementById("showArrowOption");
   const playSoundOnStartCheckbox = document.getElementById("playSoundOnStart");
   const soundOnStartOption = document.getElementById("soundOnStartOption");
   const playSoundOnEndCheckbox = document.getElementById("playSoundOnEnd");
   const soundOnEndOption = document.getElementById("soundOnEndOption");
   const showArrowCheckbox = document.getElementById("showArrow");
   const arrowDirectionOption = document.getElementById("arrowDirectionOption");
+
+  // Function to toggle reminder page sub-options visibility
+  function toggleReminderPageOptions() {
+    const isVisible = showReminderPageCheckbox.checked;
+    customBackgroundOption.style.display = isVisible ? "flex" : "none";
+    showArrowOption.style.display = isVisible ? "flex" : "none";
+    if (isVisible && showArrowCheckbox.checked) {
+      arrowDirectionOption.style.display = "flex";
+    } else {
+      arrowDirectionOption.style.display = "none";
+    }
+  }
 
   // Function to toggle sound on start dropdown visibility
   function toggleSoundOnStartOption() {
@@ -62,15 +77,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Function to toggle arrow direction dropdown visibility
   function toggleArrowDirectionOption() {
-    arrowDirectionOption.style.display = showArrowCheckbox.checked ? "flex" : "none";
+    if (showReminderPageCheckbox.checked && showArrowCheckbox.checked) {
+      arrowDirectionOption.style.display = "flex";
+    } else {
+      arrowDirectionOption.style.display = "none";
+    }
   }
 
   // Set initial visibility
+  toggleReminderPageOptions();
   toggleSoundOnStartOption();
   toggleSoundOnEndOption();
   toggleArrowDirectionOption();
 
   // Add event listeners
+  showReminderPageCheckbox.addEventListener("change", toggleReminderPageOptions);
   playSoundOnStartCheckbox.addEventListener("change", toggleSoundOnStartOption);
   playSoundOnEndCheckbox.addEventListener("change", toggleSoundOnEndOption);
   showArrowCheckbox.addEventListener("change", toggleArrowDirectionOption);
