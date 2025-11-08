@@ -41,6 +41,8 @@
         remaining--;
         if (remaining <= 0) {
             clearInterval(countdown);
+            // Mark that the timer expired naturally (not manually closed)
+            chrome.storage.local.set({ reminderClosedByTimer: true });
             window.close();
             return;
         }
@@ -51,15 +53,17 @@
         }, 150);
     }, 1000);
 
-    // Close button
+    // Close button - mark as manual close
     document.getElementById("closeBtn").addEventListener("click", () => {
         clearInterval(countdown);
+        chrome.storage.local.set({ reminderClosedByTimer: false });
         window.close();
     });
 
     // Auto-close after reminder length
     setTimeout(() => {
         clearInterval(countdown);
+        chrome.storage.local.set({ reminderClosedByTimer: true });
         window.close();
     }, remaining * 1000);
 })();

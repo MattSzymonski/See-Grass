@@ -169,17 +169,18 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 
 // --- Switch back to previous tab when reminder tab closes ---
 chrome.tabs.onRemoved.addListener(async (tabId) => {
-  const { reminderTabId, tabBeforeReminder, playSoundOnEnd, soundOnEnd } = await chrome.storage.local.get([
+  const { reminderTabId, tabBeforeReminder, playSoundOnEnd, soundOnEnd, reminderClosedByTimer } = await chrome.storage.local.get([
     "reminderTabId",
     "tabBeforeReminder",
     "playSoundOnEnd",
-    "soundOnEnd"
+    "soundOnEnd",
+    "reminderClosedByTimer"
   ]);
 
   // If the closed tab is the reminder tab
   if (tabId === reminderTabId && tabBeforeReminder) {
-    // Play end sound via offscreen document
-    if (playSoundOnEnd && soundOnEnd !== "system") {
+    // Play end sound via offscreen document only if closed by timer
+    if (reminderClosedByTimer && playSoundOnEnd && soundOnEnd !== "system") {
       await setupOffscreenDocument();
       chrome.runtime.sendMessage({ type: "PLAY_SOUND", sound: soundOnEnd });
       console.log("[See Grass] Playing end sound via offscreen document.");
@@ -194,7 +195,7 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
     }
 
     // Clean up stored IDs
-    await chrome.storage.local.remove(["reminderTabId", "tabBeforeReminder"]);
+    await chrome.storage.local.remove(["reminderTabId", "tabBeforeReminder", "reminderClosedByTimer"]);
   }
 });
 
