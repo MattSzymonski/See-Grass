@@ -10,7 +10,7 @@
         body {
             height: 100%;
             margin: 0;
-            padding: 0;
+            padding: 0px;
         }
 
         body {
@@ -18,6 +18,14 @@
             background: #252525;
             color: #e7e7e7;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            padding: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -162,6 +170,7 @@
             max-width: 90vw;
             display: flex;
             flex-direction: column;
+
         }
 
         .section-title {
@@ -215,172 +224,174 @@
 </head>
 
 <body>
-    <h1>See Grass Settings</h1>
+    <div class="content">
+        <h1>See Grass Settings</h1>
 
-    <div class="section">
-        <!-- TIMING SETTINGS -->
-        <h2 class="section-title">Timing</h2>
+        <div class="section">
+            <!-- TIMING SETTINGS -->
+            <h2 class="section-title">Timing</h2>
 
-        <!-- Reminder Interval -->
-        <div class="option">
-            <label for="reminderInterval">Reminder interval (minutes)</label>
-            <div class="option-tooltip-group">
-                <input id="reminderInterval" type="number" min="1" value="20" aria-label="Reminder interval in minutes"
-                    class="input-field-text" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">How often the reminder appears</span>
-                </span>
+            <!-- Reminder Interval -->
+            <div class="option">
+                <label for="reminderInterval">Reminder interval (minutes)</label>
+                <div class="option-tooltip-group">
+                    <input id="reminderInterval" type="number" min="1" value="20"
+                        aria-label="Reminder interval in minutes" class="input-field-text" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">How often the reminder appears</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Reminder Length -->
-        <div class="option">
-            <label for="reminderLength">Reminder length (seconds)</label>
-            <div class="option-tooltip-group">
-                <input id="reminderLength" type="number" min="1" value="10000" aria-label="Reminder length in seconds"
-                    class="input-field-text" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">How long the reminder stays on screen</span>
-                </span>
+            <!-- Reminder Length -->
+            <div class="option">
+                <label for="reminderLength">Reminder length (seconds)</label>
+                <div class="option-tooltip-group">
+                    <input id="reminderLength" type="number" min="1" value="10000"
+                        aria-label="Reminder length in seconds" class="input-field-text" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">How long the reminder stays on screen</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <hr class="section-separator">
+            <hr class="section-separator">
 
-        <!-- BEHAVIOR -->
-        <h2 class="section-title">Behavior</h2>
+            <!-- BEHAVIOR -->
+            <h2 class="section-title">Behavior</h2>
 
-        <!-- Show reminder page -->
-        <div class="option">
-            <label for="showReminderPage">Show reminder page</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="showReminderPage" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Opens a full-screen tab with grass background</span>
-                </span>
+            <!-- Show reminder page -->
+            <div class="option">
+                <label for="showReminderPage">Show reminder page</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="showReminderPage" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Opens a full-screen tab with grass background</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Custom background image -->
-        <div class="option" id="customBackgroundOption" style="margin-left: 16px;">
-            <label for="customBackgroundUrl">Custom background image</label>
-            <div class="option-tooltip-group">
-                <input id="customBackgroundUrl" type="text" placeholder="https://a.com/img.jpg"
-                    aria-label="Custom background image URL"
-                    style="width: 130px; padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px;" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">URL to custom background image (leave empty for default)</span>
-                </span>
+            <!-- Custom background image -->
+            <div class="option" id="customBackgroundOption" style="margin-left: 16px;">
+                <label for="customBackgroundUrl">Custom background image</label>
+                <div class="option-tooltip-group">
+                    <input id="customBackgroundUrl" type="text" placeholder="https://a.com/img.jpg"
+                        aria-label="Custom background image URL"
+                        style="width: 130px; padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px;" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">URL to custom background image (leave empty for default)</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Show Arrow -->
-        <div class="option" id="showArrowOption" style="margin-left: 16px;">
-            <label for="showArrow">Show arrow</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="showArrow" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Displays an arrow on the reminder page</span>
-                </span>
+            <!-- Show Arrow -->
+            <div class="option" id="showArrowOption" style="margin-left: 16px;">
+                <label for="showArrow">Show arrow</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="showArrow" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Displays an arrow on the reminder page</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Arrow Direction -->
-        <div class="option" id="arrowDirectionOption" style="margin-left: 32px;">
-            <label for="arrowDirection">Arrow direction</label>
-            <div class="option-tooltip-group">
-                <select id="arrowDirection" class="input-field-dropdown">
-                    <option value="up">Up</option>
-                    <option value="down">Down</option>
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
-                </select>
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Choose which direction the arrow points</span>
-                </span>
+            <!-- Arrow Direction -->
+            <div class="option" id="arrowDirectionOption" style="margin-left: 32px;">
+                <label for="arrowDirection">Arrow direction</label>
+                <div class="option-tooltip-group">
+                    <select id="arrowDirection" class="input-field-dropdown">
+                        <option value="up">Up</option>
+                        <option value="down">Down</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Choose which direction the arrow points</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Show system notification -->
-        <div class="option">
-            <label for="showSystemNotification">Show system notification</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="showSystemNotification" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Displays a desktop notification when reminder starts</span>
-                </span>
+            <!-- Show system notification -->
+            <div class="option">
+                <label for="showSystemNotification">Show system notification</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="showSystemNotification" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Displays a desktop notification when reminder starts</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Disable when screen-sharing -->
-        <div class="option">
-            <label for="disableWhenScreenSharing">Disable when screen-sharing</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="disableWhenScreenSharing" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Pauses reminders during Google Meet presentations</span>
-                </span>
+            <!-- Disable when screen-sharing -->
+            <div class="option">
+                <label for="disableWhenScreenSharing">Disable when screen-sharing</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="disableWhenScreenSharing" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Pauses reminders during Google Meet presentations</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <hr class="section-separator">
+            <hr class="section-separator">
 
-        <!-- AUDIO -->
-        <h2 class="section-title">Audio</h2>
+            <!-- AUDIO -->
+            <h2 class="section-title">Audio</h2>
 
-        <!-- Play sound on reminder start -->
-        <div class="option">
-            <label for="playSoundOnStart">Play sound on reminder start</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="playSoundOnStart" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Plays audio when the reminder appears</span>
-                </span>
+            <!-- Play sound on reminder start -->
+            <div class="option">
+                <label for="playSoundOnStart">Play sound on reminder start</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="playSoundOnStart" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Plays audio when the reminder appears</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Sound on start -->
-        <div class="option" id="soundOnStartOption" style="margin-left: 16px;">
-            <label for="soundOnStart">Sound on reminder start</label>
-            <div class="option-tooltip-group">
-                <select id="soundOnStart" class="input-field-dropdown">
-                    <option value="system">System</option>
-                    <option value="sound_1">Sound 1</option>
-                    <option value="sound_2">Sound 2</option>
-                </select>
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Choose which sound to play</span>
-                </span>
+            <!-- Sound on start -->
+            <div class="option" id="soundOnStartOption" style="margin-left: 16px;">
+                <label for="soundOnStart">Sound on reminder start</label>
+                <div class="option-tooltip-group">
+                    <select id="soundOnStart" class="input-field-dropdown">
+                        <option value="system">System</option>
+                        <option value="sound_1">Sound 1</option>
+                        <option value="sound_2">Sound 2</option>
+                    </select>
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Choose which sound to play</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Play sound on reminder end -->
-        <div class="option">
-            <label for="playSoundOnEnd">Play sound on reminder end</label>
-            <div class="option-tooltip-group">
-                <input type="checkbox" id="playSoundOnEnd" />
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Plays audio when the reminder closes</span>
-                </span>
+            <!-- Play sound on reminder end -->
+            <div class="option">
+                <label for="playSoundOnEnd">Play sound on reminder end</label>
+                <div class="option-tooltip-group">
+                    <input type="checkbox" id="playSoundOnEnd" />
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Plays audio when the reminder closes</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <!-- Sound on end -->
-        <div class="option" id="soundOnEndOption" style="margin-left: 16px;">
-            <label for="soundOnEnd">Sound on reminder end</label>
-            <div class="option-tooltip-group">
-                <select id="soundOnEnd" class="input-field-dropdown">
-                    <option value="system">System</option>
-                    <option value="sound_1">Sound 1</option>
-                    <option value="sound_2">Sound 2</option>
-                </select>
-                <span class="tooltip-icon">?
-                    <span class="tooltip-text">Choose which sound to play</span>
-                </span>
+            <!-- Sound on end -->
+            <div class="option" id="soundOnEndOption" style="margin-left: 16px;">
+                <label for="soundOnEnd">Sound on reminder end</label>
+                <div class="option-tooltip-group">
+                    <select id="soundOnEnd" class="input-field-dropdown">
+                        <option value="system">System</option>
+                        <option value="sound_1">Sound 1</option>
+                        <option value="sound_2">Sound 2</option>
+                    </select>
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Choose which sound to play</span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <button id="save">Save & Reset</button>
+            <button id="save">Save & Reset</button>
+        </div>
     </div>
 
     <!-- Invisible debug button in bottom right corner -->

@@ -112,13 +112,17 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     await chrome.storage.local.set({ reminderTabId: newTab.id });
 
     // Unminimize and bring window to front
-    if (lastActiveTab && lastActiveTab.windowId) {
-      const window = await chrome.windows.get(lastActiveTab.windowId);
-      if (window.state === "minimized") {
-        await chrome.windows.update(lastActiveTab.windowId, { state: "normal" });
+    if (newTab.windowId) {
+      try {
+        const window = await chrome.windows.get(newTab.windowId);
+        if (window.state === "minimized") {
+          await chrome.windows.update(newTab.windowId, { state: "normal" });
+        }
+        // drawAttention brings the window to the top and makes it flash in the taskbar
+        await chrome.windows.update(newTab.windowId, { focused: true, drawAttention: true });
+      } catch (err) {
+        console.warn("[See Grass] Could not update window:", err);
       }
-      // drawAttention brings the window to the top and makes it flash in the taskbar
-      await chrome.windows.update(lastActiveTab.windowId, { focused: true, drawAttention: true });
     }
 
     console.log("[See Grass] Opened reminder tab and brought browser to front.");
